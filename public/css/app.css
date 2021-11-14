@@ -1,0 +1,16 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito);
+.v-alert__border.v-alert__border--left {
+  left: 0 !important;
+}
+
+.v-alert__content {
+  padding-left: 6px !important;
+}
+
+.main-alert {
+  position: absolute !important;
+  right: 20px !important;
+  z-index: 100;
+  font-family: "Roboto", "Avenir", Helvetica, Arial, sans-serif;
+  top: 30px !important;
+}

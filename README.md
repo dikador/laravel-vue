@@ -1,12 +1,12 @@
-## install app
+## Start app
 ``` bash
 composer install
 
+# Install npm
 npm install
-```
 
-## Start app
-``` bash
+
+# Start server
 php artisan serve
 
 # follow vue changes

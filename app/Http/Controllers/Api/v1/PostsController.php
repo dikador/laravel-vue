@@ -121,6 +121,7 @@ class PostsController extends Controller
       return response()->json([
          "status" => true,
          "post" => $post,
+         "img" => $request->image
       ]);
    }
 

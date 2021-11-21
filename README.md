@@ -1,6 +1,7 @@
 ## install app
 ``` bash
 composer install
+
 npm install
 ```
 

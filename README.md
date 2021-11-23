@@ -1,6 +1,6 @@
-## Start app
+# Start app
 
-# Installing dependencies 
+### Installing dependencies 
 
 ```bash
 # Install composer

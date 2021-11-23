@@ -1,6 +1,6 @@
 ## Start app
 
-# Установка зависимостей
+# Installing dependencies 
 
 ```bash
 # Install composer

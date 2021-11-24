@@ -53,7 +53,7 @@ class PostsController extends Controller
          return response()->json([
             "status" => false,
             "message" => $validator->messages()
-         ]);
+         ])->setStatusCode(500);
       }
 
       if (gettype($request->image) != "string") {
@@ -87,6 +87,7 @@ class PostsController extends Controller
             "message" => "Post not found"
          ])->setStatusCode(404);
       }
+
       return $post;
    }
 
@@ -120,9 +121,8 @@ class PostsController extends Controller
 
       return response()->json([
          "status" => true,
-         "post" => $post,
-         "img" => $request->image
-      ]);
+         "message" => 'update accepted'
+      ])->setStatusCode(200);
    }
 
    /**
@@ -138,9 +138,9 @@ class PostsController extends Controller
 
       Uploadable::deleteFile($post->image);
 
-      return request()->json([
+      return response()->json([
          "status" => true,
          "post" => $post
-      ]);
+      ])->setStatusCode(200);
    }
 }

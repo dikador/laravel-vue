@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mx-auto" min-width="350px" max-width="90%">
+    <v-card class="mx-auto" width="90%" max-width="800">
         <v-container fluid>
             <v-row>
                 <v-col v-for="post in posts" :key="post.id" :cols="12">
@@ -17,34 +17,33 @@
                                 <span>{{ post.title }} </span>
                             </v-card-title>
                         </v-img>
-                        <!-- https://via.placeholder.com/150 -->
                         <v-card-actions
                             class="justify-space-between"
                             justify-space-between
                         >
-                            <div class="d-flex">
+                            <div class="d-flex" v-if="$store.state.auth.admin">
                                 <v-btn
                                     @click="$emit('openDialog', post)"
                                     class="mr-4"
                                     outlined
                                     color="indigo"
                                 >
-                                    Edit
+                                    Изменить
                                 </v-btn>
 
                                 <v-btn
-                                    @click="deletePost(post.id)"
+                                    @click="deletedPost(post.id)"
                                     class="mr-4 deleteBtn"
                                     color="red"
                                     dark
                                 >
-                                    delete
+                                    Удалить
                                 </v-btn>
                             </div>
 
                             <router-link :to="'blog/' + post.id">
                                 <v-btn outlined color="indigo">
-                                    Learn more
+                                    Подробнее
                                 </v-btn>
                             </router-link>
                         </v-card-actions>
@@ -71,25 +70,8 @@ export default {
     },
 
     methods: {
-        async deletePost(id) {
-            await axios
-                .delete(`api/posts/${id}`)
-                .then((response) => {
-                    this.$store.state.post.posts = this.posts.filter(
-                        (post1) => post1.id !== id
-                    );
-
-                    this.$store._mutations.setAlertSuccessText[0](
-                        "Пост успешно удален!"
-                    );
-                })
-                .catch((err) => {
-                    this.$store._mutations.setAlertErrorText[0](
-                        "Произошла ошибка"
-                    );
-
-                    console.log(err + " Ошибка");
-                });
+        deletedPost(id) {
+            this.$store.dispatch("post/deletePost", id);
         },
     },
 };

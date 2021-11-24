@@ -22,6 +22,8 @@ class UserController extends Controller
          $user->email = $request->email;
          $user->phone = $request->phone;
          $user->password = Hash::make($request->password);
+         $user->admin = $request->admin;
+
          $user->save();
 
          $success = true;
@@ -31,7 +33,6 @@ class UserController extends Controller
          $message = $ex->getMessage();
       }
 
-      // response
       $response = [
          'success' => $success,
          'message' => $message,
@@ -49,18 +50,10 @@ class UserController extends Controller
          'password' => $request->password,
       ];
 
-      if (Auth::attempt($credentials)) {
-         $success = true;
-         $message = 'User login successfully';
-      } else {
-         $success = false;
-         $message = 'Unauthorised';
-      }
+      $success = Auth::attempt($credentials) ? true : false;
 
-      // response
       $response = [
          'success' => $success,
-         'message' => $message,
       ];
       return response()->json($response)->setStatusCode(200);
    }
@@ -79,7 +72,6 @@ class UserController extends Controller
          $message = $ex->getMessage();
       }
 
-      // response
       $response = [
          'success' => $success,
          'message' => $message,

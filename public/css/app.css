@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
 .v-alert__border.v-alert__border--left {
   left: 0 !important;
 }
@@ -8,9 +9,57 @@
 }
 
 .main-alert {
-  position: absolute !important;
+  position: fixed !important;
   right: 20px !important;
   z-index: 100;
   font-family: "Roboto", "Avenir", Helvetica, Arial, sans-serif;
   top: 30px !important;
+}
+
+.main-wrapper {
+  padding: 100px 20px 0px 20px;
+}
+
+.buttons a.router-link-exact-active.router-link-active .theme--light.v-btn.v-btn--has-bg {
+  background-color: #31da8e !important;
+  color: #2c3e50 !important;
+}
+
+#app {
+  font-family: "Roboto", "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+}
+
+h1 {
+  text-align: center;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+#nav {
+  padding: 20px 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+#nav a {
+  font-weight: bold;
+  font-size: 20px;
+  color: #2c3e50;
+}
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+
+.flexApp {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
 }

@@ -91,7 +91,6 @@ export default {
         async editPost() {
             let formData = new FormData();
             formData.append("title", this.activePost.title);
-
             if (this.files) {
                 formData.append("image", this.files);
             }

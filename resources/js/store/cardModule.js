@@ -6,12 +6,24 @@ export const cardModule = {
 
    actions: {
       async fetchPosts({ commit }, url) {
-         await axios.get(url)
+         await axios.get(url[0])
             .then(response => {
                commit('setLoading', false)
                commit('setPosts', response.data)
             })
-            .catch(error => console.log('Ошибка ' + error));
+            .catch(error => {
+               url[1].push('../blog')
+            });
+      },
+      async deletePost({ commit }, id) {
+         await axios
+            .delete(`api/posts/${id}`)
+            .then((response) => {
+               commit('setDeletePost', id)
+            })
+            .catch((err) => {
+               commit('setDeletePost', id, true)
+            });
       }
    },
 
@@ -26,6 +38,16 @@ export const cardModule = {
    mutations: {
       setPosts(state, data) {
          return state.posts = data;
+      },
+      setDeletePost(state, data, err) {
+         state.posts = state.posts.filter(post1 => post1.id !== data)
+
+         if (err) {
+            this._mutations.setAlertErrorText[0]("Произошла ошибка");
+         } else {
+            this._mutations.setAlertSuccessText[0]("Пост успешно удален!");
+         }
+
       },
       setLoading(state, data) {
          return state.loading = data;

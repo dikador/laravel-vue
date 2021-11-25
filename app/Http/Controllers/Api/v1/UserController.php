@@ -23,7 +23,6 @@ class UserController extends Controller
          $user->phone = $request->phone;
          $user->password = Hash::make($request->password);
          $user->admin = $request->admin;
-
          $user->save();
 
          $success = true;

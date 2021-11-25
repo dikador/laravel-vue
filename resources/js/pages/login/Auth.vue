@@ -31,9 +31,6 @@
                     block
                     >Авторизоваться</v-btn
                 >
-                <p class="message">
-                    Администратор: Login - root@gmail.com; Password - 2341
-                </p>
             </v-form>
         </div>
     </div>

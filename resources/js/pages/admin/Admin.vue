@@ -4,7 +4,7 @@
             <h1>
                 Добро пожаловть в админ панель {{ this.$store.state.auth.name }}
             </h1>
-            <v-form class="form login-form" lazy-validation ref="form">
+            <v-form class="form login-form" lazy-validation ref="formPost">
                 <h2>Добавить посты</h2>
                 <v-text-field
                     :rules="titleRules"
@@ -17,6 +17,7 @@
 
                 <v-file-input
                     dense
+                    :rules="fileRules"
                     v-if="!switch1"
                     class="file-inp"
                     v-model="files"
@@ -58,11 +59,7 @@
                 <v-checkbox
                     class="mainq-switch"
                     v-model="switch1"
-                    :label="
-                        !switch1
-                            ? 'Добавить картинку по src'
-                            : 'Загрузить картинку'
-                    "
+                    label="Добавить картинку по src"
                 ></v-checkbox>
                 <v-btn
                     :loading="$store.state.loader"
@@ -159,41 +156,54 @@ export default {
                     v.length >= 4 || "Пароль должен содержать минимум 4 знаков",
             ],
 
+            fileRules: [
+                (value) =>
+                    value.type === "image/jpeg" ||
+                    value.type === "image/jpg" ||
+                    value.type === "image/png" ||
+                    value.type === "image/svg+xml" ||
+                    "Загрузите картинку",
+                (value) =>
+                    value.size < 2000000 || "Картинка не должна превышать 2Мб",
+            ],
+
             titleRules: [(v) => !!v || "Это обязательное поле"],
         };
     },
 
     methods: {
         async createPost() {
-            this.$store.state.loader = true;
-            let formData = new FormData();
-            formData.append("title", this.title);
-            formData.append("image", this.files);
+            if (this.$refs.formPost.validate()) {
+                this.$store.state.loader = true;
+                let formData = new FormData();
+                formData.append("title", this.title);
+                formData.append("image", this.files);
 
-            if (typeof this.files === "string") {
-                formData = {
-                    title: this.title,
-                    image: this.files,
-                };
+                if (typeof this.files === "string") {
+                    formData = {
+                        title: this.title,
+                        image: this.files,
+                    };
+                }
+
+                await axios
+                    .post("api/posts", formData)
+                    .then((response) => {
+                        this.$store._mutations.setAlertSuccessText[0](
+                            "Пост успешно создан"
+                        );
+
+                        this.title = " ";
+                    })
+                    .catch((err) => {
+                        console.log("Ошибка: " + err);
+                        this.$store._mutations.setAlertErrorText[0](
+                            "Произошла ошибка"
+                        );
+                    });
+
+                this.$store.state.loader = false;
             }
-
-            await axios
-                .post("api/posts", formData)
-                .then((response) => {
-                    this.$store._mutations.setAlertSuccessText[0](
-                        "Пост успешно создан"
-                    );
-
-                    this.title = " ";
-                })
-                .catch((err) => {
-                    console.log("Ошибка: " + err);
-                    this.$store._mutations.setAlertErrorText[0](
-                        "Произошла ошибка"
-                    );
-                });
-
-            this.$store.state.loader = false;
         },
 
         async registration() {

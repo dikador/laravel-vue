@@ -1,12 +1,11 @@
 <template>
     <div class="login-page">
         <div class="form">
-            <v-form class="login-form" lazy-validation ref="form">
+            <v-form class="login-form" ref="form">
                 <h1>Авторизация</h1>
                 <v-text-field
                     :rules="emailRules"
                     color="#76b852"
-                    required
                     v-model="email"
                     hide-details="auto"
                     class="main-input"
@@ -16,7 +15,6 @@
                     :rules="passwordRules"
                     type="password"
                     color="#76b852"
-                    required
                     v-model="password"
                     hide-details="auto"
                     class="main-input"
@@ -41,22 +39,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
     data() {
         return {
-            valid: true,
-
             email: "",
-            emailRules: [
-                (v) => !!v || "Это обязательное поле",
-                (v) => /.+@.+\..+/.test(v) || "Введите корректный email",
-            ],
             password: "",
-            passwordRules: [
-                (v) => !!v || "Это обязательное поле",
-                (v) =>
-                    v.length >= 4 || "Пароль должен содержать минимум 4 знаков",
-            ],
         };
     },
 
@@ -81,6 +69,13 @@ export default {
                 this.$store.state.loader = false;
             }
         },
+    },
+
+    computed: {
+        ...mapState({
+            emailRules: (state) => state.rule.emailRules,
+            passwordRules: (state) => state.rule.passwordRules,
+        }),
     },
 };
 </script>

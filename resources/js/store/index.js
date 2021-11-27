@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { cardModule } from "./cardModule.js";
 import { loginModule } from "./loginModule.js";
+import { ruleModule } from "./ruleModule.js";
 
 Vue.use(Vuex)
 
@@ -18,7 +19,8 @@ export default new Vuex.Store({
 
    modules: {
       post: cardModule,
-      login: loginModule
+      login: loginModule,
+      rule: ruleModule
    },
 
    mutations: {

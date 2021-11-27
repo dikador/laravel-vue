@@ -2,13 +2,13 @@
     <div>
         <div class="login-page">
             <div class="form">
-                <v-form class="login-form" lazy-validation ref="form">
+                <v-form class="login-form" ref="form">
                     <h1>Регистрация</h1>
                     <v-text-field
                         color="#76b852"
                         required
                         v-model="name"
-                        :rules="nameRules"
+                        :rules="requiredRules"
                         hide-details="auto"
                         class="main-input"
                         label="Имя"
@@ -57,30 +57,14 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
     data() {
         return {
             name: "",
-            error: "",
-            nameRules: [(v) => !!v || "Это обязательное поле"],
             email: "",
-            emailRules: [
-                (v) => !!v || "Это обязательное поле",
-                (v) => /.+@.+\..+/.test(v) || "Введите корректный email",
-            ],
             phone: "",
-            phoneRules: [
-                (v) => !!v || "Это обязательное поле",
-                (v) =>
-                    v.length >= 11 ||
-                    "Телефон должен содержать не менее 11 символов",
-            ],
             password: "",
-            passwordRules: [
-                (v) => !!v || "Это обязательное поле",
-                (v) =>
-                    v.length >= 4 || "Пароль должен содержать минимум 4 знаков",
-            ],
         };
     },
 
@@ -108,6 +92,15 @@ export default {
                 this.$store.state.loader = false;
             }
         },
+    },
+
+    computed: {
+        ...mapState({
+            requiredRules: (state) => state.rule.requiredRules,
+            emailRules: (state) => state.rule.emailRules,
+            passwordRules: (state) => state.rule.passwordRules,
+            phoneRules: (state) => state.rule.phoneRules,
+        }),
     },
 };
 </script>

@@ -14,9 +14,6 @@ export const loginModule = {
                         window.location.href = body[1].location
                      }
 
-                     // if (body[2] === "api/login") window.location.href = "/"
-                     // if (body[2] === "login/registrationUser") window.location.href = "auth"
-
                   } else {
                      this._mutations.setAlertErrorText[0](
                         body[1].error

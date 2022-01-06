@@ -5,9 +5,6 @@
 ```bash
 # Install composer
 composer install
-
-# Install npm
-npm install
 ```
 
 ### In the next step, open the .env.example file. Change the name of this file to .env and change the database settings.
@@ -29,9 +26,6 @@ php artisan storage:link
 ```bash
 # Start server
 php artisan serve
-
-# follow vue changes
-npm run watch
 ```
 
 ### P.S The vue code is in the directory resources/js
